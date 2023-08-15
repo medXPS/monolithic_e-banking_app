@@ -1,19 +1,15 @@
-
-
-node {
+pipeline {
     agent any
 
     stages {
         stage('Checkout') {
-         
-        git branch: 'main',
-            
-            url: 'https://github.com/medXPS/Jenkins_test.git'
+            steps {
+                checkout scm
+            }
         }
 
         stage('Build') {
             steps {
-                // Run Maven to package the Spring Boot application
                 sh 'mvn clean package'
             }
         }
@@ -21,7 +17,6 @@ node {
 
     post {
         success {
-            // Archive the built artifact (JAR or WAR) to make it available for download
             archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
         }
     }
