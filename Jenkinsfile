@@ -3,13 +3,13 @@ node {
     def mvnHome = tool name: 'maven', type: 'maven'
     def mvnCMD = "${mvnHome}/bin/mvn "
 
-    stage('Checkout'){
+    stage('Checkout github repo'){
         git branch: 'main',
             credentialsId: 'git',
             url: 'https://github.com/medXPS/Jenkins_test.git'
     }
 
-    stage('Build and Push Image'){
+    stage('Build and Push Image to artifact registry'){
         withCredentials([file(credentialsId: 'gcp', variable: 'GC_KEY')]){
             sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
             sh 'gcloud auth configure-docker us-central1-docker.pkg.dev'
@@ -17,7 +17,7 @@ node {
         }
     }
 
-    stage('Deploy') {
+    stage('Deploy to GKE Cluster ') {
         sh "sed -i 's|IMAGE_URL|${repourl}|g' deployment.yaml"
         step([$class: 'KubernetesEngineBuilder',
             projectId: env.PROJECT_ID,
