@@ -8,12 +8,25 @@ node {
             credentialsId: 'git',
             url: 'https://github.com/medXPS/Jenkins_test.git'
     }
+    stage('Build'){
+       sh "${mvnCMD} clean install
 
-    stage('Build and Push Image to artifact registry'){
+    }
+    stage('sonarqube analysis'){
+    withSonarQubeEnv('Sonar'){
+    sh "${mvnCMD} sonar:sonar"
+    }
+    }
+  stage('Quality gate'){
+
+  waitForQualityGate abortPipeline: true
+  }
+
+    stage(' Push Image to artifact registry'){
         withCredentials([file(credentialsId: 'gcp', variable: 'GC_KEY')]){
             sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
             sh 'gcloud auth configure-docker us-central1-docker.pkg.dev'
-            sh "${mvnCMD} clean install jib:build -DREPO_URL=${REGISTRY_URL}/${PROJECT_ID}/${ARTIFACT_REGISTRY}"
+            sh "${mvnCMD}  jib:build -DREPO_URL=${REGISTRY_URL}/${PROJECT_ID}/${ARTIFACT_REGISTRY}"
         }
     }
 
