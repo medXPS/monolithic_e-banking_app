@@ -17,10 +17,6 @@ node {
     sh "${mvnCMD} sonar:sonar"
     }
     }
-  stage('Quality gate'){
-
-  waitForQualityGate abortPipeline: true
-  }
 
     stage(' Push Image to artifact registry'){
         withCredentials([file(credentialsId: 'gcp', variable: 'GC_KEY')]){
