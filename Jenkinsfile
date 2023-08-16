@@ -9,7 +9,7 @@ node {
             url: 'https://github.com/medXPS/Jenkins_test.git'
     }
     stage('Build'){
-       sh "${mvnCMD} clean install
+       sh "${mvnCMD} clean install"
 
     }
     stage('sonarqube analysis'){
