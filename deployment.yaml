@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: jenkins_test-app
+  name: jenkins-test-app
 spec:
   selector:
     matchLabels:
-      app: jenkins_test-app
+      app: jenkins-test-app
   template:
     metadata:
       labels:
-        app: jenkins_test-app
+        app: jenkins-test-app
     spec:
       containers:
-        - name: jenkins_test-app
+        - name: jenkins-test-app
           image: IMAGE_URL/jenkins_test
           resources:
             requests:
@@ -27,11 +27,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins_test-svc
+  name: jenkins-test-svc
 spec:
   type: LoadBalancer
   selector:
-    app: jenkins_test-app
+    app: jenkins-test-app
   ports:
     - port: 80
       targetPort: 9090

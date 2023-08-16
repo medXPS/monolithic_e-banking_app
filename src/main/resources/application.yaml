@@ -3,4 +3,4 @@ server:
 
 spring:
   application:
-    name: jenkins_test
+    name: jenkins-test
