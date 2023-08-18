@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
     @GetMapping("/test")
     public String test(){
-        return "we will use this endpoint for deploying an automated email sender ";
+        return "hello it works! ";
     }
 }

@@ -18,10 +18,10 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 1Gi  # 1 gigabyte of memory
+              memory: 2Gi  # 1 gigabyte of memory
             limits:
               cpu: 500m
-              memory: 1Gi  # 1 gigabyte of memory
+              memory: 3Gi  # 1 gigabyte of memory
           ports:
             - containerPort: 9090
 ---
