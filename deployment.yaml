@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: jenkins-test-app
 spec:
-  replicas: 1  # Scale to 3 replicas
+  replicas: 1
   selector:
     matchLabels:
       app: jenkins-test-app
@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
         - name: jenkins-test-app
-          image: IMAGE_URL/jenkins_test
+          image: ${IMAGE_URL}/jenkins_test:${BUILD_NUMBER}
           resources:
             requests:
               cpu: 100m
-              memory: 1Gi  # 1 gigabyte of memory
+              memory: 1Gi
             limits:
               cpu: 150m
-              memory: 1Gi  # 1 gigabyte of memory
+              memory: 1Gi
           ports:
             - containerPort: 9090
 ---

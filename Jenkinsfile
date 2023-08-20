@@ -8,34 +8,33 @@ node {
             credentialsId: 'git',
             url: 'https://github.com/medXPS/Jenkins_test.git'
     }
+
     stage('Build'){
        sh "${mvnCMD} clean install"
-
-    }
-    stage('sonarqube analysis'){
-    withSonarQubeEnv('sonar'){
-    sh "${mvnCMD} sonar:sonar"
-    }
     }
 
-    stage(' Push Image to artifact registry'){
+    stage('SonarQube analysis'){
+        withSonarQubeEnv('sonar'){
+            sh "${mvnCMD} sonar:sonar"
+        }
+    }
+
+    stage('Push Image to artifact registry'){
         withCredentials([file(credentialsId: 'gcp', variable: 'GC_KEY')]){
             sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
             sh 'gcloud auth configure-docker us-central1-docker.pkg.dev'
-            sh "${mvnCMD}  jib:build -DREPO_URL=${REGISTRY_URL}/${PROJECT_ID}/${ARTIFACT_REGISTRY}"
+            sh "${mvnCMD} jib:build -DREPO_URL=${repourl}:${BUILD_NUMBER}"
         }
     }
 
     stage('Deploy to GKE Cluster ') {
-        sh "sed -i 's|IMAGE_URL|${repourl}|g' deployment.yaml"
+        sh "sed -i 's|IMAGE_URL|${repourl}:${BUILD_NUMBER}|g' deployment.yaml"
         step([$class: 'KubernetesEngineBuilder',
             projectId: env.PROJECT_ID,
             clusterName: env.CLUSTER,
             location: env.REGION,
             manifestPattern: 'deployment.yaml',
-            credentialsId:env.PROJECT_ID,
-
+            credentialsId: env.PROJECT_ID,
         ])
     }
 }
-//my  jenkins file
