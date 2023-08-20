@@ -40,7 +40,7 @@
 						<image>openjdk:17</image>
 					</from>
 					<to>
-						<image>${REPO_URL}/jenkins_test:${BUILD_NUMBER}</image>
+						<image>${REPO_URL}/jenkins_test</image>
 						<tags>${project.version}</tags>
 					</to>
 				</configuration>
