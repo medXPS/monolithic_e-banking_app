@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
     @GetMapping("/test")
     public String test(){
-        return "new version ";
+        return "new version 10.1.9 ";
     }
 }
