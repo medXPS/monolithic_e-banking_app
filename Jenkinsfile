@@ -5,9 +5,12 @@ node {
 
     stage('Checkout github repo'){
         git branch: 'main',
-            credentialsId: 'git',
-            url: 'https://github.com/medXPS/Jenkins_test.git'
+        credentialsId: 'git',
+        url: 'https://github.com/medXPS/Jenkins_test.git'
+
+
     }
+
     stage('Build'){
        sh "${mvnCMD} clean install"
 
