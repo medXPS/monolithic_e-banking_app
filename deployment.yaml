@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: jenkins-test-app
-          image: IMAGE_URL/jenkins_test
+          image: IMAGE_URL/monolith
           resources:
             requests:
               cpu: 100m

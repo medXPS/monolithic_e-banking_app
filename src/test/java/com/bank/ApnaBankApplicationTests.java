@@ -1,10 +1,10 @@
-package com.jnkTest.demo;
+package com.bank;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class ApnaBankApplicationTests {
 
 	@Test
 	void contextLoads() {
